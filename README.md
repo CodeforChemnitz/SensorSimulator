@@ -1,5 +1,7 @@
 # SensorSimulator
 
+This is a simulator to develop the setup client without the actual hardware.
+
 ## Requirements
 
     pip install -r requirements.txt
@@ -14,4 +16,4 @@ If this runs on a different host you need to change the variable `API_HOST` in a
 
 Now you can connect to the simulator on http://localhost:5001.
 
-It behaves like https://git.dinotools.org/poc/SensorNodeESP8266/about/ 
+It behaves like https://git.dinotools.org/poc/SensorNodeESP8266/about/
