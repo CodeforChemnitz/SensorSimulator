@@ -147,17 +147,17 @@ function sa_p(message_element)
 /**
  * Save WiFi
  */
-function sw(f)
+function sw()
 {
     var message_element = $('#mw');
     message_element.innerHTML = '';
-    sw_ssid(f, message_element);
+    sw_ssid(message_element);
 }
 
 /**
  * Save WiFi Password
  */
-function sw_pw(f, message_element)
+function sw_pw(message_element)
 {
     var password = $('#p').value;
 
@@ -179,7 +179,7 @@ function sw_pw(f, message_element)
 /**
  * Save WiFi SSID
  */
-function sw_ssid(f, message_element)
+function sw_ssid(message_element)
 {
     var ssid = $('#s').value;
 
@@ -191,7 +191,7 @@ function sw_ssid(f, message_element)
             class = "msg error";
         }
         message_element.innerHTML += gmt({'c': class, 'v': r.responseText});
-        sw_pw(f, message_element);
+        sw_pw(message_element);
     };
 
     r.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
