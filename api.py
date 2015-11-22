@@ -126,6 +126,33 @@ def handlePassword():
     return "Password set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 
+@app.route("/info/wifi/ssids")
+def handleScanSSID():
+    ssids = [
+        {
+            "ssid": "test",
+            "crypt": "none"
+        },
+        {
+            "ssid": "debug",
+            "crypt": "wep"
+        },
+        {
+            "ssid": "fake",
+            "crypt": "wpa2"
+        }
+    ]
+
+    result = ssids
+    if "q" in request.args:
+        result = []
+        for ssid in ssids:
+            if ssid["ssid"].startswith(request.args["q"]):
+                result.append(ssid)
+
+    return json.dumps(result), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+
 @app.route("/info/wifi/sta")
 def handleSTA():
     status = {
