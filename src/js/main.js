@@ -155,7 +155,7 @@ function sw_pw(f, message_element)
             class = "msg error";
         }
         message_element.innerHTML += gmt({'c': class, 'v': r.responseText});
-        //save(f);
+        save(message_element);
     };
 
     r.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -192,7 +192,7 @@ function save(message_element)
     r = new j();
     r.open('GET', gus, false);
     r.onreadystatechange = function () {
-        var class = 'msg error';
+        var class = "msg success";
         if(r.status != 200) {
             class = "msg error";
         }
