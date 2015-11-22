@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
 
 from flask import Flask, request, Response
 import requests
@@ -68,6 +69,16 @@ def actionRestart():
 @app.route("/action/save")
 def actionSave():
     return "Config saved to eeprom", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+
+@app.route("/info/wifi/sta")
+def handleSTA():
+    status = {
+        "connected": True,
+        "ip": "192.168.1.2",
+        "netmask": "255.255.255.0"
+    }
+    return json.dumps(status), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 @app.route("/config/wifi/sta/ssid", methods=["GET", "POST"])
 def handleSSID():
