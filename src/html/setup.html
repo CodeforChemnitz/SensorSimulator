@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script src="/setup/js.js"></script>
+    </head>
+    <body onload="load()">
+        <div>
+            <h1>SensorNode Base Config</h1>
+            <div>
+                <h2>Step 1: WiFi</h2>
+                <div id="msw"></div>
+                <form>
+                    <ul id="mw"></ul>
+                    <label for="s">SSID</label>
+                    <input id="s" type="text" name="ssid"/>
+                    <label for="p">Password</label>
+                    <input id="p" type="password" name="password"/>
+                    <input type="button" value="Save" onclick="sw(this)"/>
+                    <input type="button" value="Check/Recheck" onclick="gws()"/>
+                </form>
+            </div>
+            <div>
+                <h2>Step 2: Register</h2>
+                <div id="msr"></div>
+                <form>
+                    <ul id="mr"></ul>
+                    <label for="e">E-Mail</label>
+                    <input id="e" type="text" name="email"/>
+                    <label for="n">Name</label>
+                    <input id="n" type="text" name="name"/>
+                    <input type="button" value="Submit" onclick="register(this)"/>
+                    <input type="button" value="Check/Recheck" onclick="grs()"/>
+                </form>
+            </div>
+            <div>
+                <h2>Step 3: Sensors</h2>
+                <div id="ss"></div>
+                <form>
+                    <ul id="ms"></ul>
+                    <label for="vs">Sensor Config</label>
+                    <textarea id="vs"></textarea>
+                    <input type="button" value="Submit" onclick="ss(this)"/>
+                </form>
+            </div>
+            <h1>SensorNode Advanced Config</h1>
+                <div>
+                    <h2>Sensor-API (optional)</h2>
+                    <form>
+                        <p id="mh"></p>
+                        <p id="mpo"></p>
+                        <label for="h">Hostname</label>
+                        <input id="h" type="text" name="hotname"/>
+                        <label for="po">Port</label>
+                        <input id="po" type="number" name="port"/>
+                        <input type="button" value="Save" onclick="sa(this)"/>
+                    </form>
+                </div>
+        </div>
+    </body>
+</html>
