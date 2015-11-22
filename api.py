@@ -73,16 +73,6 @@ def actionSave():
     return "Config saved to eeprom", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 
-@app.route("/info/wifi/sta")
-def handleSTA():
-    status = {
-        "connected": True,
-        "ip": "192.168.1.2",
-        "netmask": "255.255.255.0"
-    }
-    return json.dumps(status), 200, {'Content-Type': 'application/json; charset=utf-8'}
-
-
 @app.route("/config/api/hostname", methods=["GET", "POST"])
 def handleAPIHostname():
     if request.method == "GET":
@@ -134,6 +124,16 @@ def handlePassword():
 
     data['password'] = request.form["password"]
     return "Password set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+
+@app.route("/info/wifi/sta")
+def handleSTA():
+    status = {
+        "connected": True,
+        "ip": "192.168.1.2",
+        "netmask": "255.255.255.0"
+    }
+    return json.dumps(status), 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 
 @app.route("/setup", methods=["GET"])
