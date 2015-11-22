@@ -92,38 +92,52 @@ function load()
     r.send();
 }
 
-function s_api(f)
+/**
+ * Save API config
+ */
+function sa()
+{
+    var message_element = $('#ma');
+    message_element.innerHTML = '';
+    sa_h(message_element);
+}
+
+/**
+ * Save API Hostname
+ */
+function sa_h(message_element)
 {
     var hostname = $('#h').value;
-    var port = $('#po').value;
-
     var r = new j();
     r.open('POST', guah, false);
     r.onreadystatechange = function () {
-        var elem = $("#mh");
-        if(r.status == 200) {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg success";
-        } else {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg error";
+        var class = 'msg success';
+        if(r.status != 200) {
+            class = "msg error";
         }
+        message_element.innerHTML += gmt({'c': class, 'v': r.responseText});
+        sa_p(message_element);
     };
 
     r.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     r.send("hostname=" + encodeURIComponent(hostname));
+}
 
-    r = new j();
+/**
+ * Save API Port
+ */
+function sa_p(message_element)
+{
+    var port = $('#po').value;
+    var r = new j();
     r.open('POST', guap, false);
     r.onreadystatechange = function () {
-        var elem = $("#mpo");
-        if(r.status == 200) {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg success";
-        } else {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg error";
+        var class = 'msg success';
+        if(r.status != 200) {
+            class = "msg error";
         }
+        message_element.innerHTML += gmt({'c': class, 'v': r.responseText});
+        save(message_element);
     };
 
     r.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
