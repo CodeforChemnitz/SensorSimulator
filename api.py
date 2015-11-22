@@ -122,20 +122,16 @@ def handleSSID():
     data['ssid'] = request.form["ssid"]
     return "SSID set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
+
 @app.route("/config/wifi/sta/password", methods=["GET", "POST"])
 def handlePassword():
     if request.method == "GET":
-        if data["password"] == "":
-            return "Password not set", 404, {'Content-Type': 'text/plain; charset=utf-8'}
-        return data["password"], 200, {'Content-Type': 'text/plain; charset=utf-8'}
+        return "", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
-    if request.form == {}:
-        return "No argument given", 400, {'Content-Type': 'text/plain; charset=utf-8'}
+    if "password" not in request.form:
+        return "No password given", 400, {'Content-Type': 'text/plain'}
 
-    password = ""
-    if "password"  in request.form:
-        data['password'] = request.form["password"]
-
+    data['password'] = request.form["password"]
     return "Password set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 
