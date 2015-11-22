@@ -218,20 +218,19 @@ function save(message_element)
 
 function register(f)
 {
+    var message_element = $('#mr');
+
     var email = $('#e').value;
     var name = $('#n').value;
 
     var r = new j();
     r.open('POST', gur, false);
     r.onreadystatechange = function () {
-        var elem = $("#mar");
-        if(r.status == 200) {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg success";
-        } else {
-            elem.innerHTML = r.responseText;
-            elem.className = "msg error";
+        var class = 'msg success';
+        if(r.status != 200) {
+            class = "msg error";
         }
+        message_element.innerHTML += gmt({'c': class, 'v': r.responseText});
     };
 
     r.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
