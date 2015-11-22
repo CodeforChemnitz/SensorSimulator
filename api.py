@@ -10,6 +10,7 @@ app = Flask(__name__)
 API_HOST = 'http://localhost:5000'
 data = {
     "api_hostname": "",
+    "api_port": 0,
     "ssid": "",
     "password": "",
     "sensor_id": "",
@@ -88,10 +89,22 @@ def handleAPIHostname():
         return data["api_hostname"], 200, {'Content-Type': 'text/plain'}
 
     if "hostname" not in request.form:
-        return "No argument given", 400, {'Content-Type': 'text/plain'}
+        return "No hostname given", 400, {'Content-Type': 'text/plain'}
 
     data["api_hostname"] = request.form["hostname"]
     return "Hostname set", 200, {'Content-Type': 'text/plain'}
+
+
+@app.route("/config/api/port", methods=["GET", "POST"])
+def handleAPIPort():
+    if request.method == "GET":
+        return str(data["api_port"]), 200, {'Content-Type': 'text/plain'}
+
+    if "port" not in request.form:
+        return "No port given", 400, {'Content-Type': 'text/plain'}
+
+    data["api_port"] = int(request.form["port"])
+    return "Port set", 200, {'Content-Type': 'text/plain'}
 
 
 @app.route("/config/wifi/sta/ssid", methods=["GET", "POST"])
