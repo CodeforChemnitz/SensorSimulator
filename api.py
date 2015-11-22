@@ -111,5 +111,16 @@ def handlePassword():
 
     return "Password set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
+
+@app.route("/setup", methods=["GET"])
+def actionSetup():
+    return app.send_static_file("index.html")
+
+
+@app.route("/setup/js.js")
+def actionSetupJS():
+    return app.send_static_file("output.min.js")
+
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', threaded=True, port=5001)
