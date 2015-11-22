@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 API_HOST = 'http://localhost:5000'
 data = {
+    "api_hostname": "",
     "ssid": "",
     "password": "",
     "sensor_id": "",
@@ -79,6 +80,19 @@ def handleSTA():
         "netmask": "255.255.255.0"
     }
     return json.dumps(status), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+
+@app.route("/config/api/hostname", methods=["GET", "POST"])
+def handleAPIHostname():
+    if request.method == "GET":
+        return data["api_hostname"], 200, {'Content-Type': 'text/plain'}
+
+    if "hostname" not in request.form:
+        return "No argument given", 400, {'Content-Type': 'text/plain'}
+
+    data["api_hostname"] = request.form["hostname"]
+    return "Hostname set", 200, {'Content-Type': 'text/plain'}
+
 
 @app.route("/config/wifi/sta/ssid", methods=["GET", "POST"])
 def handleSSID():
