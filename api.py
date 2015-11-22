@@ -111,16 +111,17 @@ def handleAPIPort():
 def handleSSID():
     if request.method == "GET":
         if data["ssid"] == "":
-            return "SSID not set", 404, {'Content-Type': 'text/plain; charset=utf-8'}
+            return "SSID not set", 404, {'Content-Type': 'text/plain'}
         return data["ssid"]
 
-    if request.form == {}:
-        return "No argument given", 400, {'Content-Type': 'text/plain; charset=utf-8'}
     if "ssid" not in request.form:
-        return "SSID must at least be 1 character long", 400, {'Content-Type': 'text/plain; charset=utf-8'}
+        return "No ssid given", 400, {'Content-Type': 'text/plain'}
+
+    if len(request.form["ssid"]) == 0:
+        return "SSID must at least be 1 character long", 400, {'Content-Type': 'text/plain'}
 
     data['ssid'] = request.form["ssid"]
-    return "SSID set", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    return "SSID set", 200, {'Content-Type': 'text/plain'}
 
 
 @app.route("/config/wifi/sta/password", methods=["GET", "POST"])
