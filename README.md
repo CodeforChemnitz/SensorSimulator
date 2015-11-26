@@ -17,3 +17,28 @@ If this runs on a different host you need to change the variable `API_HOST` in a
 Now you can connect to the simulator on http://localhost:5001.
 
 It behaves like https://git.dinotools.org/poc/SensorNodeESP8266/about/
+
+# WebConfig
+
+The WebConfig is a simple web frontend to configure the sensor node.
+
+## Requirements
+
+- npm
+- grunt
+
+Install grunt packages
+
+    npm install
+
+## Development
+
+Rebuild files for the web frontend.
+
+    grunt watch
+
+## Build
+
+Build the files for the web frontend.
+
+    grunt
