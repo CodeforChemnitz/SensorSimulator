@@ -14,7 +14,7 @@ data = {
     "ssid": "",
     "password": "",
     "sensor_id": "",
-    "sensor_key": ""
+    "sensor_apikey": ""
 }
 
 @app.route("/")
@@ -34,33 +34,37 @@ def getOverview():
 
 @app.route("/action/register", methods=["POST"])
 def actionRegister():
-    if "email" not in request.form:
-        return "E-Mail not given", 400, {'Content-Type': 'text/plain; charset=utf-8'}
+    email = request.form.get("email")
+    if email is None or email.strip() == "":
+        return "E-Mail not given", 400, {"Content-Type": "text/plain"}
 
-    message = "email:" + request.form["email"] + "\r\n"
-    if "name" in request.form:
-        message += "name:" + request.form["name"] + "\r\n"
+    register_info = {
+        "email": email
+    }
+
+    name = request.form.get("name")
+    if name is not None and name.strip() != "":
+        register_info["name"] = name
 
     if False:
-        return "Unable to connect to remote server", 500, {'Content-Type': 'text/plain; charset=utf-8'}
+        return "Unable to connect to remote server", 500, {'Content-Type': 'text/plain'}
 
     # POST /sensors with message
-    r = requests.post(API_HOST + "/sensors", data=message, headers={"X-Sensor-Version": "1"})
+    r = requests.post(API_HOST + "/sensors", json=register_info, headers={"X-Sensor-Version": "1"})
 
     # TODO this is the only difference to the actual code on the microcontroller
     if r.status_code != 200:
-        return "Remote server failure: " + str(r.status_code) + ": " + r.content, 500, {'Content-Type': 'text/plain; charset=utf-8'}
+        return "Remote server failure: " + str(r.status_code) + ": " + r.content.decode("utf-8"), 500, {'Content-Type': 'text/plain; charset=utf-8'}
 
-    lines = r.content.split("\n")
+    api_credentials = r.content.decode("utf-8")
+    api_credentials = json.loads(api_credentials)
 
-    # fetch sensor_id and sensor_key
-    for line in lines:
-        pair = line.split(":", 2)
-        if len(pair) == 2:
-            if pair[0] == "id":
-                data["sensor_id"] = pair[1]
-            elif pair[0] == "apikey":
-                data["sensor_key"] = pair[1]
+    if "id" not in api_credentials or "apikey" not in api_credentials:
+        # ToDo:
+        return "", 500, {'Content-Type': 'text/plain'}
+
+    data["sensor_id"] = api_credentials.get("id")
+    data["sensor_apikey"] = api_credentials.get("apikey")
 
     return "Registered", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
