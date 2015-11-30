@@ -13,8 +13,8 @@ data = {
     "api_port": 0,
     "ssid": "",
     "password": "",
-    "sensor_id": "",
-    "sensor_apikey": ""
+    "sensor_api_id": "",
+    "sensor_api_key": ""
 }
 
 @app.route("/")
@@ -59,12 +59,12 @@ def actionRegister():
     api_credentials = r.content.decode("utf-8")
     api_credentials = json.loads(api_credentials)
 
-    if "id" not in api_credentials or "apikey" not in api_credentials:
+    if "id" not in api_credentials or "key" not in api_credentials:
         # ToDo:
         return "", 500, {'Content-Type': 'text/plain'}
 
-    data["sensor_id"] = api_credentials.get("id")
-    data["sensor_apikey"] = api_credentials.get("apikey")
+    data["sensor_api_id"] = api_credentials.get("id")
+    data["sensor_api_key"] = api_credentials.get("key")
 
     return "Registered", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
