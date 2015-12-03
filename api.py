@@ -14,7 +14,8 @@ data = {
     "ssid": "",
     "password": "",
     "sensor_api_id": "",
-    "sensor_api_key": ""
+    "sensor_api_key": "",
+    "sensor_config": {}
 }
 
 
@@ -103,6 +104,44 @@ def handleAPIPort():
 
     data["api_port"] = int(request.form["port"])
     return "Port set", 200, {'Content-Type': 'text/plain'}
+
+
+@app.route("/config/sensor/<int:sensor_id>", methods=["GET", "POST"])
+def handleConfigSensor(sensor_id):
+    if sensor_id < 0 or sensor_id > 32:
+        return "Sensor with ID not available", 404, {"Content-Type": "text/plain"}
+
+    if request.method == "GET":
+        sensor_config = data["sensor_config"].get(sensor_id)
+        if sensor_config is None:
+            return "Config not found", 404
+
+        return json.dumps(sensor_config), 200, {"Content-Type": "application/json"}
+
+    if "type" not in request.form:
+        return
+
+    if "config" not in request.form:
+        return
+
+    # ToDo: more checks
+    sensor_type = request.form.get("type")
+    sensor_type = int(sensor_type)
+    sensor_config = request.form.get("config")
+    sensor_config = sensor_config.split(",")
+    tmp = []
+    for i in sensor_config:
+        i = int(i)
+        tmp.append(i)
+
+    sensor_config = tmp
+
+    data["sensor_config"][sensor_id] = {
+        "type": sensor_type,
+        "config": sensor_config
+    }
+
+    return "Success", 200, {'Content-Type': 'text/plain'}
 
 
 @app.route("/config/wifi/sta/ssid", methods=["GET", "POST"])
