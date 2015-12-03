@@ -17,6 +17,7 @@ data = {
     "sensor_api_key": ""
 }
 
+
 @app.route("/")
 def getOverview():
     message = "SensorNode\n\n"
@@ -31,6 +32,7 @@ def getOverview():
     message += "\n"
 
     return message, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
 
 @app.route("/action/register", methods=["POST"])
 def actionRegister():
@@ -68,9 +70,11 @@ def actionRegister():
 
     return "Registered", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
+
 @app.route("/action/restart")
 def actionRestart():
     return "reboot", 500, {'Content-Type': 'text/plain; charset=utf-8'}
+
 
 @app.route("/action/save")
 def actionSave():
